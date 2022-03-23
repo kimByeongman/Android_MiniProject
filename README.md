@@ -1,2 +1,2 @@
-# class7_repository
-7강의장 프로젝트를 위한 저장소
+ExoPlayer2 , Glide, Retrofit2, 공부를 위한 
+MiniProject를 만들어봤습니다.
