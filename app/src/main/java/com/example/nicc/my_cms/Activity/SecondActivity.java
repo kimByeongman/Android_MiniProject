@@ -72,6 +72,7 @@ public class SecondActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
         DataSource.Factory factory = new DefaultDataSourceFactory(this,"Main2Acitivy");
         mediaSource = new ExtractorMediaSource.Factory(factory).createMediaSource(rawResourceDataSource.getUri());
 
