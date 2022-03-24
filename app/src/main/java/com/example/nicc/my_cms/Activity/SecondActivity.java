@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.nicc.my_cms.R;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -28,6 +30,7 @@ public class SecondActivity extends AppCompatActivity {
     PlayerView exoPlayerView;
     ExtractorMediaSource mediaSource;
     Integer position;
+    ImageButton imgButton;
     final static String TAG = "Another_c";
 
     @Override
@@ -37,9 +40,20 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.second_activity);
         position = getIntent().getIntExtra("position",0);
         Log.d(TAG,"position = " + position);
+
+        imgButton = findViewById(R.id.closer);
+
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         hideForActionBar();
 
     }
+
 
     @Override
     protected void onStart() {

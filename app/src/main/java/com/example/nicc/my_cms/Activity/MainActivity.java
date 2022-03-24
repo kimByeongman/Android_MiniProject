@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         btnHide = findViewById(R.id.btnHide);
         btn = findViewById(R.id.btn);
 
-        exoPlayerView.setUseController(false);
-
         btnHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

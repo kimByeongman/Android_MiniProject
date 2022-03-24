@@ -14,7 +14,9 @@
         app:layout_constraintLeft_toRightOf="@id/pv"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:visibility="gone"
+        />
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/pv"
@@ -38,6 +40,7 @@
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
+        android:visibility="gone"
         android:src="@drawable/keyboard_arrow_back"
         android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +61,6 @@
         android:scaleType="fitXY"
         android:src="@drawable/keyboard_arrow_forward"
         android:tint="@android:color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
