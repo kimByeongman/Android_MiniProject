@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nicc.my_cms.CustomView.ReView;
-import com.example.nicc.my_cms.Implements.ActivityStartImpl;
+import com.example.nicc.my_cms.Implements.onClickLisImpl;
 
 import java.util.List;
 
@@ -19,11 +19,11 @@ public class ReAdapter extends RecyclerView.Adapter<ReAdapter.ViewHolder>{
     List<Integer> imageList;
     Context context;
     static final String TAG = "I WANT TO GO";
-    ActivityStartImpl activityStart;
+    onClickLisImpl activityStart;
 
     public ReAdapter() {}
 
-    public void setImage(List<Integer> imageList, Context context, ActivityStartImpl activityStart){
+    public void setImage(List<Integer> imageList, Context context, onClickLisImpl activityStart){
         this.imageList = imageList;
         this.context = context;
         this.activityStart = activityStart;

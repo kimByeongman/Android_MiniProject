@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.nicc.my_cms.Implements.ActivityStartImpl;
+import com.example.nicc.my_cms.Implements.onClickLisImpl;
 import com.example.nicc.my_cms.R;
 
 
@@ -25,7 +25,7 @@ public class ReView extends ConstraintLayout{
     RecyclerView rec;
     ImageView imageView;
     Integer imageList;
-    ActivityStartImpl activityStart;
+    onClickLisImpl activityStart;
 
     public ReView(Context context) {
         super(context);
@@ -60,15 +60,15 @@ public class ReView extends ConstraintLayout{
                 .into(imageView);
     }
 
-    public void setOnClick(Integer imageList , int position, final ActivityStartImpl activityStart){
+    public void setOnClick(Integer imageList , int position, final onClickLisImpl onClickLis){
         this.imageList = imageList;
         imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(position == 0){
-                    activityStart.onActivityStart(position);
+                    onClickLis.onClickList(position);
                 }else if(position == 1){
-                    activityStart.onActivityStart(position);
+                    onClickLis.onClickList(position);
                 }
             }
         });
