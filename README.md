@@ -1,4 +1,4 @@
-# Android_MiniProject
+# Android_My_cms
 만든 목적 : ExoPlayer, Glide, Retrofit2에 대하여 학습하고 cms에 대하여 배움과 동시에 라이브러리들을 활용해보기 위함
 
 만들면서 힘들었던 점 : Rest API의 명세에 맞게 하였으나 JSON의 mp4 파일을 exoplayer에 적용시키는 것에 난항을 겪음. 
