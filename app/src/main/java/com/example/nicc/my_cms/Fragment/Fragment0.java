@@ -1,7 +1,5 @@
 package com.example.nicc.my_cms.Fragment;
 
-import android.app.Activity;
-import android.media.AudioTrack;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,8 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
-import com.example.nicc.my_cms.Activity.MainActivity;
 import com.example.nicc.my_cms.R;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -39,6 +37,7 @@ public class Fragment0 extends Fragment {
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
     ExtractorMediaSource mediaSource;
+    private static Integer PERCENTAGE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +55,30 @@ public class Fragment0 extends Fragment {
         playerView = getView().findViewById(R.id.pv2);
         playerView.setUseController(false);
         position_0();
+
+        new Thread(){
+            @Override
+            public void run() {
+                while (true){
+                    try{
+                        while (!Thread.currentThread().isInterrupted()){
+                            PERCENTAGE += 1;
+                            Thread.sleep(1000);
+                            Log.d(TAG,"PERCENTAGE = " + PERCENTAGE);
+                            ProgressBar percent = (ProgressBar)view.findViewById(R.id.percentage);
+                            percent.setMax(40);
+                            percent.setProgress(PERCENTAGE);
+                            if(PERCENTAGE >= 41){
+                                currentThread().interrupt();
+                            }
+                        }
+                    }catch (Throwable t){
+                        Log.d(TAG,"Error = " + t.getMessage());
+                    }
+                }
+            }
+        }.start();
+
     }
 
     void position_0() throws RawResourceDataSource.RawResourceDataSourceException {
@@ -109,6 +132,7 @@ public class Fragment0 extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG,"exoPlayer_release 돔");
+        Thread.interrupted();
         exoPlayer.release();
     }
 }

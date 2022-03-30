@@ -1,5 +1,7 @@
 package com.example.nicc.my_cms.Activity;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity{
     Fragment0 fragment0;
     Fragment1 fragment1;
     FirstFragment firstFragment;
-
     final static String TAG = "WHAT is THIS?";
 
 
@@ -76,15 +77,18 @@ public class MainActivity extends AppCompatActivity{
 
         hideForActionBar();
         RecycleView();
+
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
+
     }
+
+
 
     void hideForActionBar(){
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
     }
-
-
-
 
     @Override
     protected void onStart() {
@@ -127,6 +131,9 @@ public class MainActivity extends AppCompatActivity{
         reAdapter.setImage(img, MainActivity.this, position -> {
             Log.d(TAG,"position = " + position);
 
+            recyclerView.setVisibility(View.GONE);
+            btn.setVisibility(View.GONE);
+            btnHide.setVisibility(View.VISIBLE);
              fragment0 = new Fragment0();
              fragment1 = new Fragment1();
 
@@ -139,6 +146,46 @@ public class MainActivity extends AppCompatActivity{
         });
         recyclerView.setAdapter(reAdapter);
     }
+
+    private class CheckTypesTask extends AsyncTask<String,String,String>{
+
+        ProgressDialog asyncDialog = new ProgressDialog(MainActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            asyncDialog.setMessage("로딩중입니다");
+
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try{
+                for(int i =0; i<5; i++){
+                    publishProgress("" + (int)(i*30));
+                    Thread.sleep(250);
+                }
+
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onProgressUpdate(String... progress){
+            asyncDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            asyncDialog.dismiss();
+            super.onPostExecute(s);
+        }
+    }
+
 
 
 }

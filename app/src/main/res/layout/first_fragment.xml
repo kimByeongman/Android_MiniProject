@@ -14,5 +14,4 @@
             app:layout_constraintTop_toTopOf="parent"
             app:resize_mode="fill" />
 
-
 </FrameLayout>

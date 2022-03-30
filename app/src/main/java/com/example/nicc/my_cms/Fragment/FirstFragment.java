@@ -46,9 +46,6 @@ public class FirstFragment extends Fragment  {
     PlayerView playerView;
     ExtractorMediaSource extractorMediaSource;
     Integer videoIndex = 12;
-    ProgressBar percentage;
-    long videoWatchedTime;
-
     final static String TAG = "FirstFragment";
 
     @Override
@@ -65,21 +62,10 @@ public class FirstFragment extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
 
         playerView = view.findViewById(R.id.play_first);
-        playerView.setUseController(false);
-
-        videoWatchedTime =0;
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                videoWatchedTime = exoPlayer.getCurrentPosition()/1000;
-            }
-        },1000);
-
-
-
 
         playVideo();
+
+
     }
     void playVideo(){
         AssetManager assetManager = getActivity().getAssets();
@@ -171,14 +157,6 @@ public class FirstFragment extends Fragment  {
 
         }catch (Exception e){
 
-        }
-    }
-    void setProgressBar(float percentageValue){
-        percentage.setProgress((int)percentageValue * 100);
-        if(percentage.getVisibility() == View.GONE){
-            percentage.setVisibility(View.VISIBLE);
-        }else if(percentageValue == 1){
-            getActivity().runOnUiThread(()-> YoYo.with(Techniques.FadeOut).duration(500).onEnd(animator -> percentage.setVisibility(View.GONE)).playOn(percentage));
         }
     }
 

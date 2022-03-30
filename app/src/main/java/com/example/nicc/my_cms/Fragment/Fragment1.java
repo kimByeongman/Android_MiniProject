@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.nicc.my_cms.R;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -36,6 +37,7 @@ public class Fragment1 extends Fragment {
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
     ExtractorMediaSource mediaSource;
+    private  static  Integer PERCENTAGE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +55,30 @@ public class Fragment1 extends Fragment {
         playerView = getView().findViewById(R.id.pv2);
         playerView.setUseController(false );
         position_1();
+
+        new Thread(){
+            @Override
+            public void run() {
+              while(true){
+                  try{
+                      while (!Thread.currentThread().isInterrupted()){
+                          PERCENTAGE +=1;
+                          Thread.sleep(1000);
+                          Log.d(TAG,"PERCENTAGE = " + PERCENTAGE);
+                          ProgressBar percent = (ProgressBar)view.findViewById(R.id.percentage);
+                          percent.setMax(44);
+                          percent.setProgress(PERCENTAGE);
+                          if(PERCENTAGE >= 45){
+                              currentThread().interrupt();
+                          }
+                      }
+                  } catch (Throwable e) {
+                      e.printStackTrace();
+                      Log.d(TAG,"Error = " + e.getMessage());
+                  }
+              }
+            }
+        }.start();
     }
 
 
