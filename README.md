@@ -10,7 +10,7 @@ RecyeclerView를 통하여 ImageList를 표현하였는데 ImageList의 item들�
 같은 Activity 내에서 재생시키고자 하였으나 Click Event에 난항을 겪어 같은 Activity 내에서 재생시키지 못하여 Intent로
 다른 Activity에서 처리하였던 것이 아쉬웠다
                          
-앞으로 더 해보고 싶은 것 : MVP 패턴이나 MVVM 패턴을 활용하여 제대로 된 cms를 만들어보고 싶음                           
+앞으로 더 추가 사항이나 수정 사항 : MVP 패턴이나 MVVM 패턴을 활용하여 제대로 된 cms를 만들어보고 싶음                           
 
 
 <수정 사항> 
