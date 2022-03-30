@@ -15,3 +15,6 @@ RecyeclerView를 통하여 ImageList를 표현하였는데 ImageList의 item들�
 
 <수정 사항> 
 Fragment 추가로 인한 , SecondActivity를 삭제하였고, 같은 Activity내에서 동영상을 재생시키는 것에 성공하였다.
+
+<추가 사항>
+동영상의 위치를 나타내는 ProgressBar 기능 추가
