@@ -1,5 +1,6 @@
 package com.example.nicc.my_cms.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,10 +34,10 @@ import lombok.SneakyThrows;
 public class Fragment0 extends Fragment {
 
     final static String TAG = "Fragment_0";
-    Integer position;
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
     ExtractorMediaSource mediaSource;
+    private boolean mCondition = true;
     private static Integer PERCENTAGE = 0;
 
     @Override
@@ -56,28 +57,38 @@ public class Fragment0 extends Fragment {
         playerView.setUseController(false);
         position_0();
 
+
+
         new Thread(){
             @Override
             public void run() {
                 while (true){
                     try{
                         while (!Thread.currentThread().isInterrupted()){
-                            PERCENTAGE += 1;
+                            PERCENTAGE+=1;
                             Thread.sleep(1000);
-                            Log.d(TAG,"PERCENTAGE = " + PERCENTAGE);
-                            ProgressBar percent = (ProgressBar)view.findViewById(R.id.percentage);
+                            Log.d(TAG, "PERCENTAGE = " +PERCENTAGE);
+                            ProgressBar percent  = (ProgressBar)view.findViewById(R.id.percentage);
                             percent.setMax(40);
                             percent.setProgress(PERCENTAGE);
                             if(PERCENTAGE >= 41){
+                                currentThread().interrupt();;
+                                PERCENTAGE = 0;
+                            }else if(!mCondition){
                                 currentThread().interrupt();
+                                PERCENTAGE = 0;
                             }
                         }
                     }catch (Throwable t){
-                        Log.d(TAG,"Error = " + t.getMessage());
+                        Log.d(TAG, "Error = " + t.getMessage());
                     }
+
                 }
             }
         }.start();
+
+
+
 
     }
 
@@ -95,44 +106,47 @@ public class Fragment0 extends Fragment {
         exoPlayer.prepare(mediaSource);
         exoPlayer.setPlayWhenReady(true);
 
-        exoPlayer.addListener(new Player.EventListener() {
-            @Override
-            public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {}
-            @Override
-            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {}
-            @Override
-            public void onLoadingChanged(boolean isLoading) {}
-            @Override
-            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                if(playbackState == Player.STATE_ENDED){
+            exoPlayer.addListener(new Player.EventListener() {
+                @Override
+                public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {}
+                @Override
+                public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {}
+                @Override
+                public void onLoadingChanged(boolean isLoading) {}
+                @Override
+                public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                    if (playbackState == Player.STATE_ENDED){
 
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FirstFragment firstFragment = new FirstFragment();
-                    fragmentManager.beginTransaction().replace(R.id.rel,firstFragment).commit();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FirstFragment firstFragment = new FirstFragment();
+                        fragmentManager.beginTransaction().replace(R.id.rel,firstFragment).commit();
+                    }
                 }
+                @Override
+                public void onRepeatModeChanged(int repeatMode) {}
+                @Override
+                public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {}
+                @Override
+                public void onPlayerError(ExoPlaybackException error) {}
+                @Override
+                public void onPositionDiscontinuity(int reason) {}
+                @Override
+                public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {}
+                @Override
+                public void onSeekProcessed() {}
+            });
+    }
 
-            }
-            @Override
-            public void onRepeatModeChanged(int repeatMode) {}
-            @Override
-            public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {}
-            @Override
-            public void onPlayerError(ExoPlaybackException error) {}
-            @Override
-            public void onPositionDiscontinuity(int reason) {}
-            @Override
-            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {}
-            @Override
-            public void onSeekProcessed() {}
-        });
 
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"exoPlayer_release 돔");
-        Thread.interrupted();
+        mCondition = false;
         exoPlayer.release();
     }
 }

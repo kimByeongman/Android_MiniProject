@@ -1,5 +1,6 @@
 package com.example.nicc.my_cms.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,11 +34,11 @@ import lombok.SneakyThrows;
 public class Fragment1 extends Fragment {
 
     final static String TAG = "Fragment_1";
-    Integer position;
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
     ExtractorMediaSource mediaSource;
-    private  static  Integer PERCENTAGE = 0;
+    boolean mPosition = true;
+    private static Integer PERCENTAGE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,31 +55,36 @@ public class Fragment1 extends Fragment {
 
         playerView = getView().findViewById(R.id.pv2);
         playerView.setUseController(false );
-        position_1();
 
         new Thread(){
             @Override
             public void run() {
-              while(true){
-                  try{
-                      while (!Thread.currentThread().isInterrupted()){
-                          PERCENTAGE +=1;
-                          Thread.sleep(1000);
-                          Log.d(TAG,"PERCENTAGE = " + PERCENTAGE);
-                          ProgressBar percent = (ProgressBar)view.findViewById(R.id.percentage);
-                          percent.setMax(44);
-                          percent.setProgress(PERCENTAGE);
-                          if(PERCENTAGE >= 45){
-                              currentThread().interrupt();
-                          }
-                      }
-                  } catch (Throwable e) {
-                      e.printStackTrace();
-                      Log.d(TAG,"Error = " + e.getMessage());
-                  }
-              }
+                while (true){
+                    try {
+                        while (!Thread.currentThread().isInterrupted()){
+                            PERCENTAGE+=1;
+                            Thread.sleep(1000);
+                            Log.d(TAG, /*로그를 쉽게 확인하기 위해 PERCENTAGE 를 msg에 PERCENT 라고 적음*/"PERCENT = " + PERCENTAGE);
+                            ProgressBar percent = (ProgressBar)view.findViewById(R.id.percentage);
+                            percent.setMax(44);
+                            percent.setProgress(PERCENTAGE);
+                            if(PERCENTAGE >= 45){
+                                currentThread().interrupt();
+                                PERCENTAGE = 0;
+                            }else if (!mPosition){
+                                currentThread().interrupt();
+                                PERCENTAGE = 0;
+                            }
+                        }
+                    }catch (Throwable t){
+                        Log.d(TAG,"Error = " + t.getMessage());
+                    }
+                }
             }
         }.start();
+
+        position_1();
+
     }
 
 
@@ -129,10 +135,13 @@ public class Fragment1 extends Fragment {
 
     }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"exoPlayer_release 되었음");
+        Log.d(TAG,"exoPlayer_release 되었음=");
+        mPosition = false;
         exoPlayer.release();
     }
 }

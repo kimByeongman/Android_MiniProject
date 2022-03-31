@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity{
     Fragment1 fragment1;
     FirstFragment firstFragment;
     final static String TAG = "WHAT is THIS?";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +69,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
         firstFragment = new FirstFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.rel,firstFragment, "first").commit();
-
+        getSupportFragmentManager().beginTransaction().add(R.id.rel, firstFragment, "first").commit();
 
 
         hideForActionBar();
@@ -80,26 +77,12 @@ public class MainActivity extends AppCompatActivity{
 
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
-
     }
-
 
 
     void hideForActionBar(){
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG,"onStart 호출 되었음");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG,"onResume 호출되었음");
     }
 
     void RecycleView() {
@@ -131,22 +114,17 @@ public class MainActivity extends AppCompatActivity{
         reAdapter.setImage(img, MainActivity.this, position -> {
             Log.d(TAG,"position = " + position);
 
-            recyclerView.setVisibility(View.GONE);
-            btn.setVisibility(View.GONE);
-            btnHide.setVisibility(View.VISIBLE);
              fragment0 = new Fragment0();
              fragment1 = new Fragment1();
-
             if(position == 0){
                 getSupportFragmentManager().beginTransaction().replace( R.id.rel,fragment0, "position_0").commit();
-            }else if(position == 1){
-                getSupportFragmentManager().beginTransaction().replace(R.id.rel,fragment1, "position_1").commit();
-            }
 
+            }else if(position == 1){
+             getSupportFragmentManager().beginTransaction().replace(R.id.rel,fragment1, "position_1").commit();
+            }
         });
         recyclerView.setAdapter(reAdapter);
     }
-
     private class CheckTypesTask extends AsyncTask<String,String,String>{
 
         ProgressDialog asyncDialog = new ProgressDialog(MainActivity.this);
@@ -185,7 +163,5 @@ public class MainActivity extends AppCompatActivity{
             super.onPostExecute(s);
         }
     }
-
-
 
 }
